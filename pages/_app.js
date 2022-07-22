@@ -1,8 +1,19 @@
 import '../styles/globals.css'
 import Head from 'next/head';
 import Script from 'next/script';
+import { useRouter } from 'next/router'
+import { pageview } from '../lib/gtm'
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+  
+  useEffect(() => {
+    router.events.on('routeChangeComplete', pageview)
+    return () => {
+      router.events.off('routeChangeComplete', pageview)
+    }
+  }, [router.events])
+
   return (
     <>
       <Script strategy="afterInteractive" id="google-tag-manager">
