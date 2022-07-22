@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router'
 import { pageview } from '../lib/gtm'
+import { sendAnalytics } from '../lib/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -26,6 +27,11 @@ function MyApp({ Component, pageProps }) {
             })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM}');
         `}
       </Script>
+      <Script src="https://unpkg.com/web-vitals/dist/web-vitals.iife.js" onLoad={() => {
+        webVitals.getCLS(sendAnalytics);
+        webVitals.getFID(sendAnalytics);
+        webVitals.getLCP(sendAnalytics);
+      }} />
       <Head>
         <title>Sub Collection Test</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
