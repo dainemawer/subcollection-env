@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import { useEffect } from 'react'
 import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router'
@@ -6,7 +7,7 @@ import { pageview } from '../lib/gtm'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
-  
+
   useEffect(() => {
     router.events.on('routeChangeComplete', pageview)
     return () => {
